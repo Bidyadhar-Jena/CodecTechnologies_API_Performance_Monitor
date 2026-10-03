@@ -1,133 +1,89 @@
 # API Performance Monitor
 
-A Python-based API monitoring and instrumentation project designed to
-help track API behavior across popular Python web frameworks. The code
-in `Main/` contains framework-specific integrations and OpenTelemetry
-helpers for collecting request traces, recording exceptions, and
-identifying API routes.
+A runnable Python/FastAPI demo that tracks API request counts, server errors, and response-time statistics, with a lightweight browser dashboard.
+
+> The original `Main/` directory contains Apitally/OpenTelemetry framework integration code. The added `app.py` and `monitor.py` provide a separate, local demo that can be run independently. The demo does not send telemetry to an external service.
 
 ## Features
 
--   **Multiple framework integrations:** includes modules for
-    BlackSheep, Django, Django Ninja, Django REST Framework, FastAPI,
-    Flask, Litestar, and Starlette.
--   **OpenTelemetry tracing:** provides helpers for tracing synchronous
-    and asynchronous functions and creating custom spans.
--   **Error capture:** includes integration hooks for recording
-    exceptions and server errors.
--   **Route discovery:** framework modules include logic for identifying
-    API paths and HTTP methods.
--   **Database and client instrumentation helpers:** `Main/otel.py`
-    includes optional helpers for instrumenting supported database
-    clients and HTTP libraries.
+- Request count and server-error count
+- Error-rate percentage
+- Average and p95 response time
+- Per-endpoint request and latency breakdown
+- Browser dashboard at `/dashboard`
+- JSON metrics endpoint at `/metrics`
+- Sample health, slow, and intentional-error endpoints
+- Basic automated tests
 
-> **Note:** This repository contains monitoring/instrumentation
-> integration code, not a complete standalone dashboard or API server.
-> The modules import `apitally` shared components and OpenTelemetry
-> packages, so they need the corresponding package dependencies and
-> configuration to run.
+## Requirements
 
-## Project Structure
+- Python 3.10 or later
+- pip
 
-``` text
-.
-├── Main/
-│   ├── __init__.py
-│   ├── blacksheep.py
-│   ├── django.py
-│   ├── django_ninja.py
-│   ├── django_rest_framework.py
-│   ├── fastapi.py
-│   ├── flask.py
-│   ├── litestar.py
-│   ├── otel.py
-│   └── starlette.py
-├── Makefile
-├── LICENSE
-└── README.md
+## Run locally
+
+```bash
+python -m venv .venv
 ```
 
-## Technologies
+Activate the environment:
 
--   Python
--   OpenTelemetry
--   Python web frameworks (depending on the integration used)
--   `uv`, Ruff, and pytest for the development commands defined in the
-    `Makefile`
-
-## Getting Started
-
-### 1. Get the repository
-
-``` bash
-git clone <your-repository-url>
-cd <repository-folder>
+**Windows**
+```powershell
+.venv\\Scripts\\activate
 ```
 
-Replace the placeholders with your repository URL and local folder name.
-
-### 2. Install the project dependencies
-
-Install the dependencies required by your chosen framework integration,
-including the appropriate OpenTelemetry instrumentation packages and the
-`apitally` components referenced by the source code.
-
-This ZIP does not include a dependency manifest such as `pyproject.toml`
-or `requirements.txt`, so the exact installation command depends on how
-you intend to package or run the code.
-
-### 3. Configure the integration
-
-Choose the module that matches your Python web framework and follow the
-relevant framework's setup instructions. The integration modules contain
-references to the Apitally setup guides and SDK documentation:
-
--   [Apitally setup guides](https://docs.apitally.io/setup-guides)
--   [Apitally Python SDK
-    reference](https://docs.apitally.io/sdk-reference/python)
--   [OpenTelemetry Python
-    documentation](https://opentelemetry.io/docs/languages/python/)
-
-Do not commit API tokens, write tokens, or other secrets to source
-control. Store secrets in environment variables or a secrets manager.
-
-## Development Commands
-
-The included `Makefile` defines these commands, assuming the required
-development dependencies and project configuration are available:
-
-``` bash
-make format
-make check
-make test
-make test-coverage
+**macOS/Linux**
+```bash
+source .venv/bin/activate
 ```
 
--   `make format` runs Ruff import sorting and formatting.
--   `make check` runs Ruff checks, checks formatting, runs `ty`, and
-    verifies the `uv` lockfile.
--   `make test` runs pytest.
--   `make test-coverage` runs pytest with coverage reporting.
+Install dependencies:
 
-The ZIP provided for this README does not include a `tests/` directory
-or the project configuration/lock files, so these commands may require
-additional files from the full project.
+```bash
+pip install -r requirements.txt
+```
 
-## Security and Privacy
+Start the API:
 
-Before enabling request or response capture in a real application,
-review the monitoring configuration and ensure sensitive data such as
-authorization headers, credentials, personal information, and secrets
-are excluded or masked.
+```bash
+uvicorn app:app --reload
+```
+
+Open these URLs:
+
+- API home: http://127.0.0.1:8000/
+- Interactive API docs: http://127.0.0.1:8000/docs
+- Dashboard: http://127.0.0.1:8000/dashboard
+- JSON metrics: http://127.0.0.1:8000/metrics
+- Health check: http://127.0.0.1:8000/health
+- Slow sample endpoint: http://127.0.0.1:8000/slow
+- Intentional error test: http://127.0.0.1:8000/error
+
+Visit `/health`, `/slow`, and `/error`, then refresh the dashboard to see metrics.
+
+## Run tests
+
+```bash
+pytest -v
+```
+
+## Important limitations
+
+- Metrics are stored in memory and reset when the app restarts.
+- This is a learning/demo implementation, not production monitoring infrastructure.
+- Endpoint names currently use request paths, so dynamic IDs may appear as separate endpoint labels.
+- The demo does not include authentication, persistent storage, alerting, or multi-process aggregation.
+- The original `Main/` integration modules depend on the Apitally package internals and their corresponding OpenTelemetry dependencies. They are separate from this demo app.
+
+## Security
+
+Do not expose this demo dashboard or metrics endpoint publicly without access controls. Avoid collecting secrets, authorization headers, or personal data in monitoring output.
 
 ## License
 
-See the [`LICENSE`](LICENSE) file for the license terms.
+See [LICENSE](LICENSE) for the license included with the original project.
 
 ## Author
 
-**Bidyadhar Jena**
-
-This README describes the source files included in the provided project
-archive. Update the setup instructions and repository links after adding
-the project's dependency configuration and deployment details.
+Bidyadhar Jena
