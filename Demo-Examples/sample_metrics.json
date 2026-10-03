@@ -1,0 +1,49 @@
+{
+  "demo_mode": true,
+  "notice": "FAKE DEMO DATA - illustrative values only; not collected from a live API.",
+  "generated_for": "API Performance Monitor project demonstration",
+  "summary": {
+    "total_requests": 3640,
+    "error_count": 45,
+    "error_rate_percent": 1.24,
+    "average_response_time_ms": 218.5,
+    "p95_response_time_ms": 690.0
+  },
+  "endpoints": [
+    {
+      "endpoint": "GET /users",
+      "requests": 1250,
+      "errors": 5,
+      "average_response_time_ms": 120.0,
+      "p95_response_time_ms": 240.0
+    },
+    {
+      "endpoint": "GET /products",
+      "requests": 980,
+      "errors": 2,
+      "average_response_time_ms": 85.0,
+      "p95_response_time_ms": 170.0
+    },
+    {
+      "endpoint": "POST /login",
+      "requests": 450,
+      "errors": 18,
+      "average_response_time_ms": 240.0,
+      "p95_response_time_ms": 510.0
+    },
+    {
+      "endpoint": "GET /orders",
+      "requests": 760,
+      "errors": 12,
+      "average_response_time_ms": 310.0,
+      "p95_response_time_ms": 620.0
+    },
+    {
+      "endpoint": "GET /reports",
+      "requests": 200,
+      "errors": 8,
+      "average_response_time_ms": 850.0,
+      "p95_response_time_ms": 1200.0
+    }
+  ]
+}

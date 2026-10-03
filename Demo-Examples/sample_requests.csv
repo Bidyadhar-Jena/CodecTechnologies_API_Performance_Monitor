@@ -1,0 +1,11 @@
+timestamp,method,path,status_code,response_time_ms,demo_data
+2026-10-03T10:00:00Z,GET,/users,200,118,true
+2026-10-03T10:00:02Z,GET,/products,200,82,true
+2026-10-03T10:00:04Z,POST,/login,401,235,true
+2026-10-03T10:00:06Z,GET,/orders,200,305,true
+2026-10-03T10:00:08Z,GET,/reports,200,845,true
+2026-10-03T10:00:10Z,GET,/users,500,265,true
+2026-10-03T10:00:12Z,POST,/login,500,410,true
+2026-10-03T10:00:14Z,GET,/products,200,88,true
+2026-10-03T10:00:16Z,GET,/reports,503,1240,true
+2026-10-03T10:00:18Z,GET,/orders,200,315,true
